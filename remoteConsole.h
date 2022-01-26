@@ -20,6 +20,7 @@
 #include <QtGui/qicon.h>
 #include "PrefixTree.h"
 #include <qlistwidget.h>
+#include <qcheckbox.h>
 
 class RemoteConsole : public QWidget
 {
@@ -32,6 +33,7 @@ private:
 	QTextEdit* console = nullptr;
 	PrefixTree* prefix_tree = nullptr;
 	QMenu* menu_variant = nullptr;
+	QCheckBox* help = nullptr;
 
 	std::vector<QString> commands_history;
 	std::vector<QString>::iterator it_command;
@@ -45,6 +47,7 @@ private slots:
 	void slotSendCommand();
 	void slotOpenPrefixMenu();
 	void slotTextPaste();
+	void showHelp(bool check);
 signals:
 	void signal_sendCommand(QString command);
 };

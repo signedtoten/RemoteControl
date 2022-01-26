@@ -9,10 +9,12 @@ RemoteConsole::RemoteConsole(QWidget* parent) :QWidget(parent)
 	connect(button_send, &QPushButton::clicked, this, &RemoteConsole::slotSendCommand);
 	console = new QTextEdit;
 	command_line = new QLineEdit;
-	connect(command_line, &QLineEdit::textChanged, this, &RemoteConsole::slotOpenPrefixMenu);
+	help = new QCheckBox("help",this);
+	connect(help, &QCheckBox::clicked, this, &RemoteConsole::showHelp);
 	menu_variant = new QMenu(this);
 	menu_variant->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
 
+	hlayout->addWidget(help);
 	hlayout->addWidget(command_line);
 	hlayout->addWidget(button_send);
 	vlayout->addWidget(console);
@@ -66,6 +68,16 @@ void RemoteConsole::slotTextPaste()
 {
 	QAction* action = static_cast<QAction*>(sender());
 	command_line->setText(action->text());
+}
+
+void RemoteConsole::showHelp(bool check)
+{
+	if (check) {
+		connect(command_line, &QLineEdit::textChanged, this, &RemoteConsole::slotOpenPrefixMenu);
+	}
+	else {
+		disconnect(command_line, &QLineEdit::textChanged, this, &RemoteConsole::slotOpenPrefixMenu);
+	}
 }
 
 void RemoteConsole::slotOpenPrefixMenu()
