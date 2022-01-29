@@ -294,7 +294,7 @@ void RemoteControl::slotUploadDir(QString path)
 	remote_host_widget->buttonDisable(true);
 	QByteArray send_data;
 	QDataStream stream(&send_data, QIODevice::WriteOnly);
-	QByteArray data_file = ReadFile(remote_host_widget->getPathDir() + "/" +path);
+	QByteArray data_file = ReadFile(path);
 	if (data_file.size() == 0) {
 		QMessageBox::information(this, "information", "wrong path or empty file " + remote_host_widget->getPathDir() + "/" + path);
 		return;

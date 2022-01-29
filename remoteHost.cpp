@@ -1,4 +1,5 @@
 #include "remoteHost.h"
+
 remoteHost::remoteHost(QWidget* parent) : QWidget(parent)
 {
 	hlayout = new QHBoxLayout;
@@ -69,11 +70,8 @@ void remoteHost::uploadDir(QString path)
 		QStringList fileList = dir.entryList(mask.split(" "), QDir::Files);
 		dir.setSorting(QDir::Size);
 		for (QString file : fileList) {
-			QString file_path = "";
-			for (int i = path.length(); i < dir.absoluteFilePath(file).length(); ++i) {
-				file_path[i - path.length()] = dir.absoluteFilePath(file)[i];
-			}
-			emit signal_uploadDir(file_path.remove(0,1));
+			QString path = dir.absoluteFilePath(file);
+			emit signal_uploadDir(path);
 		}
 		stack.pop();
 		QStringList dirList = dir.entryList(QDir::Dirs);
